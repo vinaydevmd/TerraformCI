@@ -26,7 +26,7 @@ resource "random_string" "uniquestring" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "811-bb689e08-provide-continuous-delivery-with-gith"
+  name     = "811-bb689e08-provide-continuous-delivery-with-gith-new"
   location = "West US"
 }
 
