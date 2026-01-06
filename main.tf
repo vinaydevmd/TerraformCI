@@ -14,9 +14,9 @@ provider "azurerm" {
 }
 
 resource "random_string" "uniquestring" {
-  length           = 20
-  special          = false
-  upper            = false
+  length  = 20
+  special = false
+  upper   = false
 }
 
 resource "azurerm_resource_group" "rg" {
