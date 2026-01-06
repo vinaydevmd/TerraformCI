@@ -1,15 +1,9 @@
 terraform {
-  required_version = ">=1.3.7"
+  required_version = ">=1.3.0"
   required_providers {
     azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~>3.43.0"
-    }
-  }
-  cloud {
-    organization = "accenture-workspace"
-    workspaces {
-      name = "remotestate"
+      "source" = "hashicorp/azurerm"
+      version  = "3.43.0"
     }
   }
 }
@@ -19,22 +13,21 @@ provider "azurerm" {
   skip_provider_registration = true
 }
 
-# Register the Microsoft.Storage resource provider
-resource "azurerm_resource_provider_registration" "storage" {
-  name = "Microsoft.Storage"
+resource "random_string" "uniquestring" {
+  length           = 20
+  special          = false
+  upper            = false
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "my-rg2"
-  location = "East US"
+  name     = "%ResourceGroupName%"
+  location = "%ResourceGroupLocation%"
 }
 
-resource "azurerm_storage_account" "storage" {
-  name                     = "vdterraformdemo02"
+resource "azurerm_storage_account" "storageaccount" {
+  name                     = "stg${random_string.uniquestring.result}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
-  account_replication_type = "RAGRS"
-
+  account_replication_type = "LRS"
 }
-
